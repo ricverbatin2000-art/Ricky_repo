@@ -1,1080 +1,436 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Torino Chocolate Experience 🍫</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cinzel:wght@400;600&family=Lato:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Countdown Compleanno</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cinzel:wght@400;600&family=Lato:wght@300;400;600&display=swap" rel="stylesheet" />
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { -webkit-text-size-adjust: 100%; }
-
-    body {
-      font-family: 'Lato', sans-serif;
-      min-height: 100vh;
-      color: white;
-      background: linear-gradient(180deg, #0d0806 0%, #1a0f0a 30%, #2d1b12 100%);
-      overflow-x: hidden;
-      position: relative; /* per layer ::before */
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    :root{
+      --bg1:#0d0806;
+      --bg2:#1a0f0a;
+      --gold:#d4af37;
+      --cream:#f4e4c1;
+      --mint:#4ade80;
+      --card:rgba(255,255,255,.06);
+      --stroke:rgba(212,175,55,.25);
     }
-
-    /* ------------------ SFONDO CIOCCOLATINI ------------------ */
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{
+      min-height:100vh;
+      font-family:Lato, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--cream);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(212,175,55,.16), transparent 60%),
+        radial-gradient(900px 500px at 80% 0%, rgba(244,228,193,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2) 55%, #2d1b12);
+      overflow-x:hidden;
+      position:relative;
+    }
+    /* Polvere dorata */
     body::before{
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-
-      background-image:
-        linear-gradient(180deg, rgba(13,8,6,0.45) 0%, rgba(26,15,10,0.25) 35%, rgba(45,27,18,0.45) 100%),
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='65%25'%3E%3Cstop offset='0%25' stop-color='%23f4e4c1' stop-opacity='.18'/%3E%3Cstop offset='100%25' stop-color='%23d4af37' stop-opacity='.05'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='220' height='220' fill='none'/%3E%3Cg opacity='.9'%3E%3Cg transform='translate(28 34) rotate(-10)'%3E%3Crect x='0' y='0' width='64' height='48' rx='10' fill='rgba(0,0,0,0)' stroke='%23d4af37' stroke-opacity='.22' stroke-width='2'/%3E%3Cpath d='M16 0v48M32 0v48M48 0v48' stroke='%23d4af37' stroke-opacity='.12' stroke-width='2'/%3E%3Cpath d='M0 16h64M0 32h64' stroke='%23d4af37' stroke-opacity='.10' stroke-width='2'/%3E%3C/g%3E%3Cg transform='translate(132 128) rotate(12)'%3E%3Crect x='0' y='0' width='70' height='52' rx='12' fill='rgba(0,0,0,0)' stroke='%23f4e4c1' stroke-opacity='.16' stroke-width='2'/%3E%3Cpath d='M18 0v52M35 0v52M52 0v52' stroke='%23f4e4c1' stroke-opacity='.09' stroke-width='2'/%3E%3Cpath d='M0 18h70M0 34h70' stroke='%23f4e4c1' stroke-opacity='.08' stroke-width='2'/%3E%3C/g%3E%3Ccircle cx='158' cy='52' r='34' fill='url(%23g)'/%3E%3Ccircle cx='52' cy='164' r='30' fill='url(%23g)'/%3E%3C/g%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 260px 260px;
-      background-position: 0 0;
-
-      opacity: 0;
-      transition: opacity 1.2s ease;
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 15% 30%, rgba(212,175,55,.10) 0 2px, transparent 3px),
+        radial-gradient(circle at 65% 40%, rgba(244,228,193,.08) 0 2px, transparent 3px),
+        radial-gradient(circle at 80% 70%, rgba(212,175,55,.08) 0 2px, transparent 3px);
+      background-size:280px 280px;
+      opacity:.35;
+      filter:blur(.2px);
     }
 
-    body.choco-bg-on::before{
-      opacity: 0.16;
+    .wrap{
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:28px 16px 70px;
+      position:relative;
+      z-index:1;
     }
 
-    .container{
-      position: relative;
-      z-index: 1;
+    .card{
+      width:min(900px, 95vw);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.18));
+      border:1px solid var(--stroke);
+      border-radius:24px;
+      box-shadow:0 30px 90px rgba(0,0,0,.55);
+      overflow:hidden;
+      position:relative;
     }
-    /* ------------------ /SFONDO CIOCCOLATINI ------------------ */
-
-    /* Overlay iniziale */
-    #fireworks-overlay {
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(13, 8, 6, 0.98) 0%, rgba(26, 15, 10, 0.99) 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      flex-direction: column;
-      opacity: 1;
-      transition: opacity 1.2s ease-out;
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:radial-gradient(600px 220px at 30% 0%, rgba(212,175,55,.24), transparent 55%);
+      pointer-events:none;
+      opacity:.8;
     }
 
-    #fireworks-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    header{
+      padding:26px 22px 10px;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+    .kicker{
+      font-family:Cinzel, serif;
+      text-transform:uppercase;
+      letter-spacing:4px;
+      font-size:12px;
+      color:rgba(212,175,55,.95);
+      margin-bottom:10px;
+    }
+    h1{
+      font-family:"Playfair Display", serif;
+      font-size:clamp(26px, 4.8vw, 44px);
+      letter-spacing:1px;
+      color:var(--cream);
+      text-shadow:0 14px 50px rgba(0,0,0,.55);
+      margin-bottom:8px;
+    }
+    .sub{
+      font-family:Cinzel, serif;
+      font-size:clamp(12px, 2.2vw, 16px);
+      letter-spacing:2px;
+      color:rgba(244,228,193,.85);
     }
 
-    .birthday-text {
-      position: relative;
-      z-index: 10000;
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 8vw, 64px);
-      text-align: center;
-      color: #f4e4c1;
-      text-shadow: 0 0 30px rgba(212, 175, 55, 0.9), 0 0 60px rgba(212, 175, 55, 0.5);
-      font-weight: 700;
-      animation: popIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      letter-spacing: 4px;
-      padding: 0 16px;
-    }
-
-    .birthday-heart{
-      display: inline-block;
-      margin-left: 10px;
-      color: #e74c3c;
-      text-shadow: 0 0 18px rgba(231,76,60,0.55);
-      transform-origin: center;
-      animation: heartbeat 1.05s ease-in-out infinite;
+    .heart{
+      display:inline-block;
+      color:#e11d48;
+      font-size:64px; /* dimensione cuore */
+      line-height:1;
+      transform-origin:center;
+      animation:heartbeat 1.05s ease-in-out infinite;
+      filter:drop-shadow(0 0 14px rgba(225,29,72,.45));
+      vertical-align:middle;
+      margin-left:8px;
     }
     @keyframes heartbeat{
-      0%, 100% { transform: scale(1); }
-      20%      { transform: scale(1.22); }
-      40%      { transform: scale(1.05); }
-      60%      { transform: scale(1.30); }
-      80%      { transform: scale(1.08); }
+      0%, 100%{ transform:scale(1); }
+      20%{ transform:scale(1.25); }
+      40%{ transform:scale(1.06); }
+      60%{ transform:scale(1.32); }
+      80%{ transform:scale(1.10); }
     }
 
-    .birthday-subtitle {
-      position: relative;
-      z-index: 10000;
-      font-family: 'Cinzel', serif;
-      font-size: clamp(14px, 3vw, 20px);
-      color: #d4af37;
-      margin-top: 25px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      font-weight: 400;
-      animation: fadeInUp 1s ease-out 0.8s both;
-      padding: 0 16px;
-      text-align: center;
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:14px;
+      padding:18px 22px 28px;
+      position:relative;
+      z-index:1;
+    }
+    .tile{
+      border-radius:18px;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(244,228,193,.12);
+      padding:16px 12px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .tile::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg, rgba(212,175,55,.18), transparent 55%);
+      opacity:.55;
+      pointer-events:none;
+    }
+    .num{
+      font-family:"Playfair Display", serif;
+      font-size:clamp(30px, 6vw, 60px);
+      line-height:1;
+      font-weight:700;
+      color:var(--cream);
+      letter-spacing:1px;
+      text-shadow:0 0 22px rgba(212,175,55,.22);
+      display:inline-block;
+      transform:translateZ(0);
+      position:relative;
+      z-index:1;
+    }
+    .label{
+      margin-top:10px;
+      font-family:Cinzel, serif;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:rgba(212,175,55,.9);
+      position:relative;
+      z-index:1;
     }
 
-    @keyframes popIn {
-      from { transform: scale(0.2) rotate(-15deg); opacity: 0; }
-      to   { transform: scale(1) rotate(0deg); opacity: 1; }
+    .progress{
+      padding:0 22px 26px;
+      position:relative;
+      z-index:1;
     }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    .bar{
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(212,175,55,.18);
+      overflow:hidden;
     }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px 20px 80px;
-      z-index: 1;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 10px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .main-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      color: #f4e4c1;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 40px rgba(212, 175, 55, 0.4);
-      margin-bottom: 10px;
-      line-height: 1.2;
+    .bar i{
+      display:block;
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, rgba(212,175,55,.55), rgba(244,228,193,.85), rgba(212,175,55,.55));
+      border-radius:999px;
+      box-shadow:0 0 24px rgba(212,175,55,.25);
+      transition:width .6s ease;
     }
 
-    .subtitle-date {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(12px, 2vw, 18px);
-      color: #d4af37;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      padding: 0 10px;
+    .footer{
+      padding:0 22px 22px;
+      text-align:center;
+      position:relative;
+      z-index:1;
+    }
+    .msg{
+      margin-top:10px;
+      color:rgba(244,228,193,.9);
+      font-size:14px;
+      line-height:1.5;
+      min-height:1.5em;
+    }
+    .done{
+      display:none;
+      margin-top:12px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(74,222,128,.35);
+      background:rgba(74,222,128,.10);
+      color:var(--mint);
+      font-family:Cinzel, serif;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      font-size:13px;
     }
 
-    .start-btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 18px 50px;
-      background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-      color: #1a0f0a;
-      font-family: 'Cinzel', serif;
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4), 0 0 0 3px rgba(212, 175, 55, 0.2);
-      transition: all 0.4s ease;
-      animation: pulse 2s ease-in-out infinite;
-      max-width: 100%;
+    canvas#confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:9999;
+      display:none;
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4), 0 0 0 3px rgba(212, 175, 55, 0.2); }
-      50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6), 0 0 0 5px rgba(212, 175, 55, 0.3); }
+    @media (max-width:720px){
+      .grid{ grid-template-columns:repeat(2, 1fr); }
     }
-
-    .start-btn:hover {
-      background: linear-gradient(135deg, #f4e4c1 0%, #d4af37 100%);
-      transform: scale(1.1);
-    }
-
-    .start-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      animation: none;
-      transform: none;
-    }
-
-    .journey-panel {
-      max-width: 760px;
-      margin: 18px auto 0;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(212, 175, 55, 0.25);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-      display: none;
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    .journey-panel.show { display: block; animation: panelIn .6s ease-out forwards; }
-    @keyframes panelIn { to { opacity: 1; transform: translateY(0); } }
-    .journey-panel h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 14px;
-      letter-spacing: 3px;
-      color: #d4af37;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-    .journey-panel p { color: rgba(244,228,193,0.9); line-height: 1.7; font-size: 15px; }
-
-    .map-wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(18px);
-      overflow: hidden;
-      transition: max-height 1.2s ease, opacity 1.2s ease, transform 1.2s ease;
-      pointer-events: none;
-    }
-    .map-wrapper.visible {
-      max-height: 560px;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .map-section {
-      position: relative;
-      height: 430px;
-      margin: 26px 0 10px;
-      background: linear-gradient(180deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
-      border-radius: 30px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 0 100px rgba(0,0,0,0.3);
-    }
-    .map-svg { width: 100%; height: 100%; display: block; }
-
-    .stop-dot {
-      fill: rgba(0,0,0,0.55);
-      stroke: #d4af37;
-      stroke-width: 3.5;
-    }
-    .stop-ico {
-      fill: none;
-      stroke: #d4af37;
-      stroke-width: 2.2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .stop-text {
-      fill: #d4af37;
-      font-family: 'Cinzel', serif;
-      font-size: 14px;
-      letter-spacing: 1.5px;
-      text-anchor: middle;
-    }
-    .stop.active .stop-dot {
-      stroke: #4ade80;
-      filter: drop-shadow(0 0 10px rgba(74,222,128,0.65));
-    }
-    .stop.active .stop-ico { stroke: #4ade80; }
-    .stop.completed .stop-dot {
-      fill: rgba(22,101,52,0.82);
-      stroke: #4ade80;
-    }
-    .stop.completed .stop-ico { stroke: #e7ffe9; }
-
-    .tram-icon { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.55)); }
-
-    .experience-cards { margin-top: 20px; }
-
-    .card {
-      background: linear-gradient(145deg, #fffdf9 0%, #f5f0e8 100%);
-      color: #333;
-      border-radius: 25px;
-      box-shadow: 0 30px 70px rgba(0,0,0,0.5), 0 0 0 2px rgba(212, 175, 55, 0.3);
-      margin: 30px auto;
-      max-width: 700px;
-      display: none;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .card.show {
-      display: block;
-      animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
-
-    .card.hiding {
-      display: block;
-      animation: cardDisappear 0.45s ease-in forwards;
-    }
-
-    @keyframes cardAppear {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes cardDisappear {
-      from { opacity: 1; transform: translateY(0) scale(1); }
-      to { opacity: 0; transform: translateY(18px) scale(0.985); }
-    }
-
-    .card-image-wrapper { position: relative; overflow: hidden; height: 250px; }
-    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
-    .card:hover .card-img { transform: scale(1.05); }
-
-    .card-badge {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-      color: white;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-family: 'Cinzel', serif;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-
-    .card-content { padding: 35px; }
-
-    .card h2 {
-      font-family: 'Playfair Display', serif;
-      color: #3d2314;
-      font-size: 28px;
-      margin-bottom: 15px;
-      font-weight: 700;
-    }
-
-    .card p {
-      color: #5a4a3a;
-      font-size: 16px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .feature-list { list-style: none; margin-bottom: 25px; }
-    .feature-list li {
-      padding: 10px 0;
-      border-bottom: 1px dashed rgba(212, 175, 55, 0.4);
-      color: #4a3f35;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .feature-list li:last-child { border-bottom: none; }
-    .feature-list li::before { content: "✦"; color: #d4af37; font-size: 14px; }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 35px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      font-size: 13px;
-      transition: all 0.4s ease;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-      max-width: 100%;
-    }
-
-    .btn-primary { background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%); color: white; }
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #a0522d 0%, #cd853f 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(139, 69, 19, 0.4);
-    }
-
-    .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%); color: white; }
-    .btn-gold:hover {
-      background: linear-gradient(135deg, #d4af37 0%, #f0d878 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(184, 134, 11, 0.4);
-    }
-
-    .btn-teal { background: linear-gradient(135deg, #2e8b57 0%, #3cb371 100%); color: white; }
-    .btn-teal:hover {
-      background: linear-gradient(135deg, #3cb371 0%, #66cdaa 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(46, 139, 87, 0.4);
-    }
-
-    .btn-dark { background: linear-gradient(135deg, #3d2314 0%, #5d4037 100%); color: white; }
-    .btn-dark:hover {
-      background: linear-gradient(135deg, #5d4037 0%, #795548 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(61, 35, 20, 0.4);
-    }
-
-    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
-
-    .continue-btn {
-      display: block;
-      margin: 25px auto 0;
-      padding: 15px 40px;
-      background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-      color: white;
-      font-family: 'Cinzel', serif;
-      font-size: 16px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-      transition: all 0.3s ease;
-      animation: pulse 2s infinite;
-      max-width: 100%;
-    }
-
-    .continue-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 35px rgba(212, 175, 55, 0.6);
-    }
-
-    .celebration-box {
-      background: linear-gradient(145deg, #fff8e7 0%, #ffefd5 100%);
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      margin-top: 30px;
-      border: 3px solid #d4af37;
-      box-shadow: inset 0 0 40px rgba(212, 175, 55, 0.15);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .celebration-box strong {
-      font-family: 'Playfair Display', serif;
-      color: #8b4513;
-      font-size: 26px;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .celebration-box span { font-size: 16px; color: #6b5a4a; }
-
-    .particle { position: fixed; pointer-events: none; z-index: 9998; }
-
-    /* Responsive (tablet/phone) */
-    @media (max-width: 768px) {
-      .map-section { height: 320px; }
-      .card-content { padding: 25px; }
-      .card h2 { font-size: 22px; }
-      .btn-group { flex-direction: column; }
-      .btn { width: 100%; }
-      .stop-text { font-size: 12px; }
-    }
-
-    /* EXTRA: telefoni piccoli */
-    @media (max-width: 480px) {
-      .container { padding: 22px 14px 70px; }
-
-      .birthday-text { letter-spacing: 2px; }
-      .birthday-subtitle { letter-spacing: 3px; margin-top: 18px; }
-
-      .main-title { font-size: 26px; letter-spacing: 2px; }
-      .subtitle-date { font-size: 12px; letter-spacing: 2px; }
-
-      .start-btn{
-        width: 100%;
-        max-width: 340px;
-        padding: 16px 20px;
-        font-size: 16px;
-      }
-
-      .map-section { height: 280px; border-radius: 22px; }
-      .stop-text { font-size: 11px; letter-spacing: 1px; }
-
-      .card { margin: 18px 10px; border-radius: 20px; }
-      .card-image-wrapper { height: 200px; }
-      .card-content { padding: 22px; }
-
-      body.choco-bg-on::before { opacity: 0.12; } /* un po’ più leggero su mobile */
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    @media (prefers-reduced-motion: reduce){
+      .bar i{ transition:none; }
+      .heart{ animation:none; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Overlay iniziale -->
-  <div id="fireworks-overlay">
-    <canvas id="fireworks-canvas"></canvas>
-    <div class="birthday-text">Buon Compleanno <span class="birthday-heart" aria-hidden="true">❤</span></div>
-    <div class="birthday-subtitle">Un viaggio ti attende...</div>
-  </div>
+  <canvas id="confetti"></canvas>
 
-  <div class="container">
-    <header class="hero" id="hero">
-      <h1 class="main-title">Torino Chocolate Experience 🍫</h1>
-      <div class="subtitle-date">28 Febbraio — 1 Marzo 2026</div>
-      <button class="start-btn" id="startBtn" onclick="startJourney()">🚃 Inizia il Viaggio</button>
-    </header>
+  <main class="wrap">
+    <section class="card" aria-label="Countdown compleanno">
+      <header>
+        <div class="kicker">Countdown</div>
+        <h1>Ci siamo quasi <span class="heart" aria-label="cuore" role="img">♥</span></h1>
+        <div class="sub" id="targetText">16 febbraio 2026 • 00:00</div>
+      </header>
 
-    <section class="journey-panel" id="journeyPanel" aria-live="polite">
-      <h3>Un viaggio ti attende…</h3>
-      <p>Tra poco comparirà la mappa: il tram farà tappa in tre punti speciali. Quando arriva a un pallino, si sblocca l’esperienza corrispondente.</p>
-    </section>
-
-    <div class="map-wrapper" id="mapWrapper">
-      <section class="map-section">
-        <svg class="map-svg" id="torinoMap"
-             viewBox="0 0 1000 450"
-             xmlns="http://www.w3.org/2000/svg"
-             xmlns:xlink="http://www.w3.org/1999/xlink"
-             role="img"
-             aria-label="Mappa stilizzata di Torino con percorso del tram">
-          <defs>
-            <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1e3a5f"/>
-              <stop offset="50%" stop-color="#2d5a87"/>
-              <stop offset="100%" stop-color="#1e3a5f"/>
-            </linearGradient>
-
-            <filter id="softGlow">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-
-            <symbol id="ico-tram" viewBox="0 0 24 24">
-              <rect x="5" y="7" width="14" height="10" rx="2"/>
-              <path d="M8 17v2M16 17v2"/>
-              <circle cx="8" cy="19" r="1.2"/>
-              <circle cx="16" cy="19" r="1.2"/>
-              <path d="M5 11h14"/>
-            </symbol>
-
-            <symbol id="ico-hotel" viewBox="0 0 24 24">
-              <path d="M4 20h16"/>
-              <path d="M6 20V8l6-3 6 3v12"/>
-              <path d="M10 20v-4h4v4"/>
-              <path d="M9 10h2M13 10h2M9 13h2M13 13h2"/>
-            </symbol>
-
-            <symbol id="ico-choco" viewBox="0 0 24 24">
-              <rect x="6" y="6" width="12" height="14" rx="2"/>
-              <path d="M10 6v14M14 6v14"/>
-              <path d="M6 11h12M6 15h12"/>
-            </symbol>
-          </defs>
-
-          <rect x="0" y="0" width="1000" height="450" fill="url(#bg)"/>
-
-          <path d="M120 310
-                   C120 190 240 120 390 110
-                   C520 100 700 130 820 210
-                   C900 270 890 350 800 380
-                   C650 430 390 420 240 370
-                   C160 340 120 330 120 310 Z"
-                fill="rgba(255,255,255,0.06)"
-                stroke="rgba(244,228,193,0.25)"
-                stroke-width="2"/>
-
-          <text x="500" y="255"
-                text-anchor="middle"
-                font-family="Cinzel, serif"
-                font-size="78"
-                letter-spacing="14"
-                fill="rgba(244,228,193,0.14)">
-            TORINO
-          </text>
-
-          <path d="M760 40 C820 110 835 160 820 220 C800 300 820 340 880 410"
-                fill="none" stroke="rgba(74,144,164,0.85)" stroke-width="26" stroke-linecap="round"/>
-          <path d="M760 40 C820 110 835 160 820 220 C800 300 820 340 880 410"
-                fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="4" stroke-linecap="round"/>
-
-          <g opacity="0.25">
-            <path d="M210 150 L740 320" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 10"/>
-            <path d="M250 340 L760 170" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 10"/>
-            <path d="M330 120 L560 410" stroke="#d4af37" stroke-width="2" stroke-dasharray="6 10"/>
-          </g>
-
-          <path id="tramRoute"
-                d="M170 300
-                   C190 180 310 135 430 135
-                   C580 135 720 165 800 235
-                   C865 295 845 360 770 375
-                   C640 400 430 385 280 350
-                   C205 332 175 325 170 300 Z"
-                fill="none"
-                stroke="rgba(212,175,55,0.65)"
-                stroke-width="6"
-                stroke-linecap="round"
-                filter="url(#softGlow)"/>
-
-          <!-- Fermate -->
-          <g class="stop" id="stop1">
-            <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico"
-                 href="#ico-tram" xlink:href="#ico-tram"
-                 x="-10" y="-10" width="20" height="20"></use>
-            <text class="stop-text" y="-32">Choco Tram</text>
-          </g>
-
-          <g class="stop" id="stop2">
-            <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico"
-                 href="#ico-hotel" xlink:href="#ico-hotel"
-                 x="-10" y="-10" width="20" height="20"></use>
-            <text class="stop-text" y="-32">Palazzo Bellezia</text>
-          </g>
-
-          <g class="stop" id="stop3">
-            <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico"
-                 href="#ico-choco" xlink:href="#ico-choco"
-                 x="-10" y="-10" width="20" height="20"></use>
-            <text class="stop-text" y="-32">Peyrano</text>
-          </g>
-
-          <!-- Tram -->
-          <g id="tram" class="tram-icon">
-            <rect x="-34" y="-16" width="68" height="32" rx="6" fill="#d4af37" stroke="rgba(26,15,10,0.7)" stroke-width="2"/>
-            <rect x="-26" y="-9" width="18" height="12" rx="2" fill="#87ceeb" opacity="0.95"/>
-            <rect x="-4"  y="-9" width="18" height="12" rx="2" fill="#87ceeb" opacity="0.95"/>
-            <rect x="18"  y="-9" width="18" height="12" rx="2" fill="#87ceeb" opacity="0.95"/>
-            <circle cx="-30" cy="13" r="4" fill="#ffeb3b"/>
-            <circle cx="30"  cy="13" r="4" fill="#ffeb3b"/>
-            <circle cx="-18" cy="20" r="5" fill="#2a2a2a"/>
-            <circle cx="0"   cy="20" r="5" fill="#2a2a2a"/>
-            <circle cx="18"  cy="20" r="5" fill="#2a2a2a"/>
-          </g>
-
-          <text x="880" y="60" fill="rgba(244,228,193,0.85)" font-size="18" text-anchor="end"
-                font-family="Cinzel, serif" letter-spacing="2">PO</text>
-        </svg>
-      </section>
-    </div>
-
-    <section class="experience-cards">
-      <div id="card1" class="card">
-        <div class="card-image-wrapper">
-          <span class="card-badge">Tappa 1</span>
-          <img src="https://imgcdn.bokun.tools/15512974-6f29-48af-8be0-268d16d92225.jpeg?fm=auto&mode=fit&crop=center&dpr=2&w=1946" class="card-img" alt="Choco Tram">
+      <div class="grid" aria-live="polite">
+        <div class="tile">
+          <div class="num" id="d">—</div>
+          <div class="label">Giorni</div>
         </div>
-        <div class="card-content">
-          <h2>🚃 Choco Tram Experience</h2>
-          <p>Il nostro viaggio inizia a bordo di un <strong>tram storico d'epoca</strong> che ci porterà per le vie più affascinanti di Torino, la capitale italiana del cioccolato.</p>
-          <ul class="feature-list">
-            <li>Giro panoramico del centro storico patrimonio UNESCO</li>
-            <li>Degustazione di giandujotti artigianali a bordo</li>
-            <li>Racconti sulla storia del cioccolato piemontese il tutto in compagnia di personaggi giunti d'un altro tempo</li>
-            <li>Visita al Museo del Cioccolato e del Gianduja</li>
-          </ul>
-          <a href="https://www.choco-story-torino.it/choco-tram-2026" target="_blank" class="btn btn-primary" rel="noopener">Scopri il Choco Tram ✨</a>
-          <button class="continue-btn" onclick="continueJourney(2)">Continua il Viaggio →</button>
+        <div class="tile">
+          <div class="num" id="h">—</div>
+          <div class="label">Ore</div>
+        </div>
+        <div class="tile">
+          <div class="num" id="m">—</div>
+          <div class="label">Minuti</div>
+        </div>
+        <div class="tile">
+          <div class="num" id="s">—</div>
+          <div class="label">Secondi</div>
         </div>
       </div>
 
-      <div id="card2" class="card">
-        <div class="card-image-wrapper">
-          <span class="card-badge">Tappa 2</span>
-          <img src="https://palazzobellezia.it/wp-content/uploads/Img_stanza-11.webp" class="card-img" alt="Palazzo Bellezia">
-        </div>
-        <div class="card-content">
-          <h2>🏨 Palazzo Bellezia Luxury Suites</h2>
-          <p>Proseguiamo il nostro viaggio verso l'hotel per rilassarci e riposarci nel cuore del centro storico di Torino.</p>
-          <ul class="feature-list">
-            <li>Junior Suite 45mq — Eleganza e comfort assoluto</li>
-            <li>Accesso SPA incluso — Piscina, Sauna, Bagno Turco</li>
-            <li>Colazione — Buffet gourmet con prodotti locali</li>
-            <li>Posizione privilegiata nel centro storico</li>
-          </ul>
-          <div class="btn-group">
-            <a href="https://palazzobellezia.it/camere/#junior-suite" target="_blank" class="btn btn-gold" rel="noopener">Guarda la Suite 👑</a>
-            <a href="https://palazzobellezia.it/spa/" target="_blank" class="btn btn-teal" rel="noopener">Esplora la SPA 🧖‍♀️</a>
-          </div>
-          <button class="continue-btn" onclick="continueJourney(3)">Prosegui →</button>
+      <div class="progress">
+        <div class="bar" aria-label="Avanzamento ultimo giorno">
+          <i id="barFill"></i>
         </div>
       </div>
 
-      <div id="card3" class="card">
-        <div class="card-image-wrapper">
-          <span class="card-badge">Tappa Finale</span>
-          <img src="https://www.peyrano.com/cdn/shop/files/Screenshot_2025-10-20_alle_11.21.16_2032x.png?v=1760952106" class="card-img" alt="Peyrano">
-        </div>
-        <div class="card-content">
-          <h2>🍫 Peyrano — Factory Tour</h2>
-          <p>Il <strong>gran finale</strong> del nostro viaggio ci porta nel laboratorio storico della celebre cioccolateria Peyrano, simbolo della tradizione cioccolatiera torinese dal 1915.</p>
-          <ul class="feature-list">
-            <li>Tour esclusivo della fabbrica storica</li>
-            <li>Tasting experience dei cioccolatini iconici</li>
-            <li>Workshop di decorazione tavolette</li>
-          </ul>
-          <a href="https://www.peyrano.com/" target="_blank" class="btn btn-dark" rel="noopener">Scopri l'Esperienza 🎩</a>
-
-          <div class="celebration-box">
-            <strong>🎂 Buon Compleanno! 🎂</strong>
-            <span>Prepara la valigia, è tutto pronto!<br>Un weekend indimenticabile ci aspetta ❤️</span>
-          </div>
-        </div>
+      <div class="footer">
+        <div class="msg" id="msg"></div>
+        <div class="done" id="done">Auguri!</div>
       </div>
     </section>
-  </div>
+  </main>
 
   <script>
-    let currentStop = 0;
-    let isMoving = false;
+    // Target: 16 febbraio 2026 ore 00:00 (locale)
+    // monthIndex: 0=Gennaio, 1=Febbraio...
+    const target = new Date(2026, 1, 16, 0, 0, 0, 0);
 
-    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const elD = document.getElementById("d");
+    const elH = document.getElementById("h");
+    const elM = document.getElementById("m");
+    const elS = document.getElementById("s");
+    const done = document.getElementById("done");
+    const msg = document.getElementById("msg");
+    const barFill = document.getElementById("barFill");
 
-    function smartScrollIntoView(el, opts) {
-      const behavior = reduceMotion ? 'auto' : ((opts && opts.behavior) || 'smooth');
-      const block = (opts && opts.block) || 'start';
-      try { el.scrollIntoView({ behavior, block }); }
-      catch (e) { el.scrollIntoView(true); }
-    }
+    const confetti = document.getElementById("confetti");
+    const ctx = confetti.getContext("2d");
 
-    const mapWrapper = document.getElementById('mapWrapper');
-    const journeyPanel = document.getElementById('journeyPanel');
+    const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function startJourney() {
-      if (isMoving) return;
+    function pad2(n){ return String(n).padStart(2, "0"); }
+    function clamp01(x){ return Math.max(0, Math.min(1, x)); }
 
-      const startBtn = document.getElementById('startBtn');
-      startBtn.disabled = true;
-      startBtn.textContent = '🚃 Viaggio in corso...';
-
-      journeyPanel.classList.add('show');
-      smartScrollIntoView(document.getElementById('hero'), { block: 'start' });
-
-      setTimeout(() => {
-        mapWrapper.classList.add('visible');
-        setTimeout(() => smartScrollIntoView(mapWrapper, { block: 'start' }), 250);
-        setTimeout(() => moveToStop(1), reduceMotion ? 50 : 1100);
-      }, reduceMotion ? 50 : 450);
-    }
-
-    function hideCard(cardEl) {
-      if (!cardEl) return Promise.resolve();
-      if (!cardEl.classList.contains('show')) return Promise.resolve();
-
-      if (reduceMotion) {
-        cardEl.classList.remove('show');
-        cardEl.classList.remove('hiding');
-        return Promise.resolve();
-      }
-
-      return new Promise((resolve) => {
-        let done = false;
-
-        const finish = () => {
-          if (done) return;
-          done = true;
-          cardEl.classList.remove('show');
-          cardEl.classList.remove('hiding');
-          cardEl.removeEventListener('animationend', onEnd);
-          resolve();
-        };
-
-        const onEnd = (ev) => {
-          if (ev.animationName === 'cardDisappear') finish();
-        };
-
-        cardEl.addEventListener('animationend', onEnd);
-        cardEl.classList.add('hiding');
-
-        setTimeout(finish, 650);
-      });
-    }
-
-    function hideAllCardsInstant() {
-      for (const n of [1,2,3]) {
-        const c = document.getElementById('card' + n);
-        c.classList.remove('hiding');
-        c.classList.remove('show');
-      }
-    }
-
-    function createParticles(element) {
-      const rect = element.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      const colors = ['#d4af37', '#f4e4c1', '#4ade80', '#ffeb3b'];
-
-      for (let i = 0; i < 18; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = centerX + 'px';
-        particle.style.top = centerY + 'px';
-        particle.style.width = (Math.random() * 10 + 5) + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        particle.style.borderRadius = '50%';
-        particle.style.boxShadow = `0 0 10px ${particle.style.backgroundColor}`;
-        document.body.appendChild(particle);
-
-        const angle = (Math.PI * 2 / 18) * i;
-        const velocity = Math.random() * 90 + 70;
-        const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * velocity;
-
-        particle.animate(
-          [
-            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-            { transform: `translate(${vx}px, ${vy}px) scale(0)`, opacity: 0 }
-          ],
-          { duration: 900, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
-        ).onfinish = () => particle.remove();
-      }
-    }
-
-    function createConfetti() {
-      const colors = ['#d4af37', '#f4e4c1', '#8b4513', '#e74c3c', '#4ade80', '#fff'];
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'particle';
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.top = '-20px';
-        confetti.style.width = Math.random() * 12 + 6 + 'px';
-        confetti.style.height = Math.random() * 8 + 4 + 'px';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-        document.body.appendChild(confetti);
-
-        const duration = Math.random() * 4 + 3;
-
-        confetti.animate(
-          [
-            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-            { transform: `translateY(${window.innerHeight + 100}px) rotate(${Math.random() * 720}deg)`, opacity: 0.3 }
-          ],
-          { duration: duration * 1000, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' }
-        ).onfinish = () => confetti.remove();
-      }
-    }
-
-    const route = document.getElementById('tramRoute');
-    const tram = document.getElementById('tram');
-
-    let routeLen = 0;
-    let tramRaf = null;
-    let tramLenNow = 0;
-
-    const stops = {
-      1: { id: 'stop1', progress: 0.15 },
-      2: { id: 'stop2', progress: 0.50 },
-      3: { id: 'stop3', progress: 0.85 }
-    };
-    const stopLen = {};
-
-    function initRoute() {
-      routeLen = route.getTotalLength();
-      tramLenNow = 0;
-      setTramAtLength(0);
-      placeStopsOnRoute();
-    }
-
-    function placeStopsOnRoute() {
-      for (const k of [1,2,3]) {
-        const el = document.getElementById(stops[k].id);
-        const len = routeLen * stops[k].progress;
-        stopLen[k] = len;
-
-        const p = route.getPointAtLength(len);
-        el.setAttribute('transform', `translate(${p.x} ${p.y})`);
-      }
-    }
-
-    function setTramAtLength(len) {
-      const l = Math.max(0, Math.min(len, routeLen));
-      const p = route.getPointAtLength(l);
-      const p2 = route.getPointAtLength(Math.min(l + 1, routeLen));
-      const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
-      tram.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${angle})`);
-    }
-
-    function animateTramToLength(targetLen, durationMs) {
-      if (tramRaf) cancelAnimationFrame(tramRaf);
-
-      const startLen = tramLenNow;
-      const delta = targetLen - startLen;
-
-      if (reduceMotion) {
-        tramLenNow = targetLen;
-        setTramAtLength(targetLen);
-        return Promise.resolve();
-      }
-
-      return new Promise((resolve) => {
-        let startTs = null;
-
-        function step(ts) {
-          if (startTs === null) startTs = ts;
-          const t = Math.min((ts - startTs) / durationMs, 1);
-          const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-          const len = startLen + delta * eased;
-          tramLenNow = len;
-          setTramAtLength(len);
-
-          if (t < 1) tramRaf = requestAnimationFrame(step);
-          else { tramRaf = null; resolve(); }
-        }
-
-        tramRaf = requestAnimationFrame(step);
-      });
-    }
-
-    async function moveToStop(stopNum) {
-      isMoving = true;
-
-      const stopEl = document.getElementById(stops[stopNum].id);
-      const targetLen = stopLen[stopNum];
-
-      await animateTramToLength(targetLen, 2200);
-
-      stopEl.classList.add('active');
-      if (!reduceMotion) createParticles(stopEl);
-
-      setTimeout(() => {
-        stopEl.classList.remove('active');
-        stopEl.classList.add('completed');
-
-        hideAllCardsInstant();
-        const card = document.getElementById('card' + stopNum);
-        card.classList.add('show');
-        smartScrollIntoView(card, { block: 'start' });
-
-        isMoving = false;
-        currentStop = stopNum;
-
-        if (stopNum === 3 && !reduceMotion) setTimeout(createConfetti, 500);
-      }, 900);
-    }
-
-    async function continueJourney(nextStop) {
-      if (isMoving) return;
-
-      const currentCard = document.getElementById('card' + currentStop);
-      await hideCard(currentCard);
-
-      smartScrollIntoView(mapWrapper, { block: 'start' });
-      setTimeout(() => moveToStop(nextStop), 450);
-    }
-
-    const overlay = document.getElementById('fireworks-overlay');
-    const canvas = document.getElementById('fireworks-canvas');
-    const ctx = canvas.getContext('2d');
-
-    let fwInterval = null;
-    let fwRaf = null;
-
-    const fwParticles = [];
-    const fwColors = ['#d4af37', '#f4e4c1', '#e74c3c', '#ff6b6b', '#ffd93d', '#6bcf7f', '#4d96ff', '#ff9f43'];
-
-    function resizeCanvas() {
+    function resizeConfetti(){
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      canvas.width = Math.floor(window.innerWidth * ratio);
-      canvas.height = Math.floor(window.innerHeight * ratio);
+      confetti.width = Math.floor(window.innerWidth * ratio);
+      confetti.height = Math.floor(window.innerHeight * ratio);
+      confetti.style.width = window.innerWidth + "px";
+      confetti.style.height = window.innerHeight + "px";
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     }
 
-    function createFirework() {
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight * 0.5 + 100;
-      const color = fwColors[Math.floor(Math.random() * fwColors.length)];
-      const count = 60;
+    let confettiOn = false;
+    let pieces = [];
+    let raf = null;
 
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 / count) * i + Math.random() * 0.8;
-        const speed = Math.random() * 5 + 3;
-        fwParticles.push({
-          x, y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          alpha: 1,
-          color,
-          size: Math.random() * 4 + 2,
-          decay: Math.random() * 0.01 + 0.008
-        });
-      }
-    }
+    function startConfetti(){
+      if (reduceMotion || confettiOn) return;
 
-    function updateFireworks() {
-      ctx.fillStyle = 'rgba(13, 8, 6, 0.12)';
-      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+      confettiOn = true;
+      confetti.style.display = "block";
+      resizeConfetti();
 
-      for (let i = fwParticles.length - 1; i >= 0; i--) {
-        const p = fwParticles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.05;
-        p.alpha -= p.decay;
-        p.vx *= 0.97;
-        p.vy *= 0.97;
+      const colors = ["#d4af37", "#f4e4c1", "#4ade80", "#ff6b6b", "#87ceeb"];
+      pieces = Array.from({length: 140}, () => ({
+        x: Math.random() * window.innerWidth,
+        y: -20 - Math.random() * window.innerHeight * 0.3,
+        w: 6 + Math.random() * 10,
+        h: 8 + Math.random() * 14,
+        vx: -1.2 + Math.random() * 2.4,
+        vy: 2.4 + Math.random() * 4.2,
+        r: Math.random() * Math.PI,
+        vr: -0.12 + Math.random() * 0.24,
+        c: colors[(Math.random() * colors.length) | 0],
+        a: 0.9
+      }));
 
-        if (p.alpha <= 0) { fwParticles.splice(i, 1); continue; }
+      const tStop = performance.now() + 5200;
 
-        ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
+      function step(t){
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-      fwRaf = requestAnimationFrame(updateFireworks);
-    }
+        for (const p of pieces){
+          p.x += p.vx;
+          p.y += p.vy;
+          p.r += p.vr;
+          p.vy += 0.01;
 
-    function stopFireworks() {
-      if (fwInterval) { clearInterval(fwInterval); fwInterval = null; }
-      if (fwRaf) { cancelAnimationFrame(fwRaf); fwRaf = null; }
-      fwParticles.length = 0;
-      window.removeEventListener('resize', resizeCanvas);
-    }
+          ctx.save();
+          ctx.globalAlpha = p.a;
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.r);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+          ctx.restore();
 
-    function hideOverlay() {
-      document.body.classList.add('choco-bg-on');
-
-      overlay.style.opacity = '0';
-      const onEnd = () => {
-        overlay.removeEventListener('transitionend', onEnd);
-        overlay.style.display = 'none';
-        stopFireworks();
-      };
-      overlay.addEventListener('transitionend', onEnd);
-
-      setTimeout(() => {
-        if (overlay.style.display !== 'none') {
-          overlay.style.display = 'none';
-          stopFireworks();
+          if (p.y > window.innerHeight + 40){
+            p.y = -20;
+            p.x = Math.random() * window.innerWidth;
+            p.vy = 2.4 + Math.random() * 4.2;
+          }
         }
-      }, 1400);
+
+        if (t < tStop){
+          raf = requestAnimationFrame(step);
+        } else {
+          confettiOn = false;
+          confetti.style.display = "none";
+          ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          if (raf) cancelAnimationFrame(raf);
+          raf = null;
+        }
+      }
+
+      raf = requestAnimationFrame(step);
     }
 
-    window.addEventListener('load', () => {
-      initRoute();
+    window.addEventListener("resize", () => { if (confettiOn) resizeConfetti(); });
 
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+    // --- REDIRECT LOGIC ---
+    let redirected = false;
+    let timer = null;
 
-      if (!reduceMotion) {
-        createFirework();
-        fwInterval = setInterval(createFirework, 400);
-        updateFireworks();
-        setTimeout(hideOverlay, 7500);
-      } else {
-        setTimeout(hideOverlay, 2200);
+    function tick(){
+      const now = new Date();
+      let diff = target.getTime() - now.getTime();
+
+      if (diff <= 0){
+        elD.textContent = "0";
+        elH.textContent = "00";
+        elM.textContent = "00";
+        elS.textContent = "00";
+
+        done.style.display = "inline-block";
+        msg.textContent = "Buon compleanno!";
+        barFill.style.width = "100%";
+        startConfetti();
+
+        if (!redirected){
+          redirected = true;
+          if (timer) clearInterval(timer);
+
+          // Pagina successiva
+          setTimeout(() => {
+            window.location.href = "torino_chocolate_experience_v3.html";
+            // alternativa (non permette back): window.location.replace("torino_chocolate_experience_v3.html");
+          }, 5500);
+        }
+        return;
       }
-    });
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      elD.textContent = String(days);
+      elH.textContent = pad2(hours);
+      elM.textContent = pad2(minutes);
+      elS.textContent = pad2(seconds);
+
+      // Barra progresso dentro l'ultima giornata
+      const secsInDay = 86400;
+      const secsLeftToday = (hours * 3600) + (minutes * 60) + seconds;
+      const p = clamp01(1 - (secsLeftToday / secsInDay));
+      barFill.style.width = (p * 100).toFixed(2) + "%";
+
+      // Messaggio opzionale
+      msg.textContent = "";
+    }
+
+    // Avvio
+    tick();
+    timer = setInterval(tick, 1000);
   </script>
 </body>
 </html>
