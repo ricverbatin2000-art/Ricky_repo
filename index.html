@@ -9,6 +9,8 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { -webkit-text-size-adjust: 100%; }
+
     body {
       font-family: 'Lato', sans-serif;
       min-height: 100vh;
@@ -16,10 +18,11 @@
       background: linear-gradient(180deg, #0d0806 0%, #1a0f0a 30%, #2d1b12 100%);
       overflow-x: hidden;
       position: relative; /* per layer ::before */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ------------------ SFONDO CIOCCOLATINI (NUOVO) ------------------ */
-    /* Layer decorativo leggero, attivato dopo overlay */
+    /* ------------------ SFONDO CIOCCOLATINI ------------------ */
     body::before{
       content: "";
       position: fixed;
@@ -39,10 +42,9 @@
     }
 
     body.choco-bg-on::before{
-      opacity: 0.16; /* intensità pattern */
+      opacity: 0.16;
     }
 
-    /* I contenuti sopra allo sfondo */
     .container{
       position: relative;
       z-index: 1;
@@ -81,9 +83,9 @@
       font-weight: 700;
       animation: popIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       letter-spacing: 4px;
+      padding: 0 16px;
     }
 
-    /* Cuore rosso che batte */
     .birthday-heart{
       display: inline-block;
       margin-left: 10px;
@@ -111,6 +113,8 @@
       text-transform: uppercase;
       font-weight: 400;
       animation: fadeInUp 1s ease-out 0.8s both;
+      padding: 0 16px;
+      text-align: center;
     }
 
     @keyframes popIn {
@@ -122,7 +126,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Container principale */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -130,7 +133,6 @@
       z-index: 1;
     }
 
-    /* Hero: solo Experience + bottone */
     .hero {
       text-align: center;
       margin-bottom: 10px;
@@ -155,6 +157,7 @@
       color: #d4af37;
       letter-spacing: 4px;
       text-transform: uppercase;
+      padding: 0 10px;
     }
 
     .start-btn {
@@ -174,6 +177,7 @@
       box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4), 0 0 0 3px rgba(212, 175, 55, 0.2);
       transition: all 0.4s ease;
       animation: pulse 2s ease-in-out infinite;
+      max-width: 100%;
     }
 
     @keyframes pulse {
@@ -193,7 +197,6 @@
       transform: none;
     }
 
-    /* “Pagina viaggio” */
     .journey-panel {
       max-width: 760px;
       margin: 18px auto 0;
@@ -219,7 +222,6 @@
     }
     .journey-panel p { color: rgba(244,228,193,0.9); line-height: 1.7; font-size: 15px; }
 
-    /* Wrapper per far “scendere” la mappa */
     .map-wrapper {
       max-width: 1000px;
       margin: 0 auto;
@@ -237,7 +239,6 @@
       pointer-events: auto;
     }
 
-    /* Mappa */
     .map-section {
       position: relative;
       height: 430px;
@@ -249,7 +250,6 @@
     }
     .map-svg { width: 100%; height: 100%; display: block; }
 
-    /* Fermate con icone */
     .stop-dot {
       fill: rgba(0,0,0,0.55);
       stroke: #d4af37;
@@ -282,7 +282,6 @@
 
     .tram-icon { filter: drop-shadow(0 10px 20px rgba(0,0,0,0.55)); }
 
-    /* Cards */
     .experience-cards { margin-top: 20px; }
 
     .card {
@@ -303,7 +302,6 @@
       animation: cardAppear 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Uscita card */
     .card.hiding {
       display: block;
       animation: cardDisappear 0.45s ease-in forwards;
@@ -319,7 +317,7 @@
     }
 
     .card-image-wrapper { position: relative; overflow: hidden; height: 250px; }
-    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
     .card:hover .card-img { transform: scale(1.05); }
 
     .card-badge {
@@ -381,6 +379,7 @@
       border: none;
       cursor: pointer;
       box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      max-width: 100%;
     }
 
     .btn-primary { background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%); color: white; }
@@ -429,6 +428,7 @@
       box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
       transition: all 0.3s ease;
       animation: pulse 2s infinite;
+      max-width: 100%;
     }
 
     .continue-btn:hover {
@@ -458,10 +458,9 @@
 
     .celebration-box span { font-size: 16px; color: #6b5a4a; }
 
-    /* Particelle */
     .particle { position: fixed; pointer-events: none; z-index: 9998; }
 
-    /* Responsive */
+    /* Responsive (tablet/phone) */
     @media (max-width: 768px) {
       .map-section { height: 320px; }
       .card-content { padding: 25px; }
@@ -469,6 +468,33 @@
       .btn-group { flex-direction: column; }
       .btn { width: 100%; }
       .stop-text { font-size: 12px; }
+    }
+
+    /* EXTRA: telefoni piccoli */
+    @media (max-width: 480px) {
+      .container { padding: 22px 14px 70px; }
+
+      .birthday-text { letter-spacing: 2px; }
+      .birthday-subtitle { letter-spacing: 3px; margin-top: 18px; }
+
+      .main-title { font-size: 26px; letter-spacing: 2px; }
+      .subtitle-date { font-size: 12px; letter-spacing: 2px; }
+
+      .start-btn{
+        width: 100%;
+        max-width: 340px;
+        padding: 16px 20px;
+        font-size: 16px;
+      }
+
+      .map-section { height: 280px; border-radius: 22px; }
+      .stop-text { font-size: 11px; letter-spacing: 1px; }
+
+      .card { margin: 18px 10px; border-radius: 20px; }
+      .card-image-wrapper { height: 200px; }
+      .card-content { padding: 22px; }
+
+      body.choco-bg-on::before { opacity: 0.12; } /* un po’ più leggero su mobile */
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -499,7 +525,12 @@
 
     <div class="map-wrapper" id="mapWrapper">
       <section class="map-section">
-        <svg class="map-svg" id="torinoMap" viewBox="0 0 1000 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mappa stilizzata di Torino con percorso del tram">
+        <svg class="map-svg" id="torinoMap"
+             viewBox="0 0 1000 450"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             role="img"
+             aria-label="Mappa stilizzata di Torino con percorso del tram">
           <defs>
             <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#1e3a5f"/>
@@ -582,22 +613,28 @@
                 stroke-linecap="round"
                 filter="url(#softGlow)"/>
 
-          <!-- Fermate (posizionate da JS sul path) -->
+          <!-- Fermate -->
           <g class="stop" id="stop1">
             <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico" href="#ico-tram" x="-10" y="-10" width="20" height="20"></use>
+            <use class="stop-ico"
+                 href="#ico-tram" xlink:href="#ico-tram"
+                 x="-10" y="-10" width="20" height="20"></use>
             <text class="stop-text" y="-32">Choco Tram</text>
           </g>
 
           <g class="stop" id="stop2">
             <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico" href="#ico-hotel" x="-10" y="-10" width="20" height="20"></use>
+            <use class="stop-ico"
+                 href="#ico-hotel" xlink:href="#ico-hotel"
+                 x="-10" y="-10" width="20" height="20"></use>
             <text class="stop-text" y="-32">Palazzo Bellezia</text>
           </g>
 
           <g class="stop" id="stop3">
             <circle class="stop-dot" r="18"></circle>
-            <use class="stop-ico" href="#ico-choco" x="-10" y="-10" width="20" height="20"></use>
+            <use class="stop-ico"
+                 href="#ico-choco" xlink:href="#ico-choco"
+                 x="-10" y="-10" width="20" height="20"></use>
             <text class="stop-text" y="-32">Peyrano</text>
           </g>
 
@@ -620,9 +657,7 @@
       </section>
     </div>
 
-    <!-- Cards (testi originali) -->
     <section class="experience-cards">
-      <!-- Card 1 -->
       <div id="card1" class="card">
         <div class="card-image-wrapper">
           <span class="card-badge">Tappa 1</span>
@@ -637,12 +672,11 @@
             <li>Racconti sulla storia del cioccolato piemontese</li>
             <li>Visita al Museo del Cioccolato e del Gianduja</li>
           </ul>
-          <a href="https://www.choco-story-torino.it/choco-tram-2026" target="_blank" class="btn btn-primary">Scopri il Choco Tram ✨</a>
+          <a href="https://www.choco-story-torino.it/choco-tram-2026" target="_blank" class="btn btn-primary" rel="noopener">Scopri il Choco Tram ✨</a>
           <button class="continue-btn" onclick="continueJourney(2)">Continua il Viaggio →</button>
         </div>
       </div>
 
-      <!-- Card 2 -->
       <div id="card2" class="card">
         <div class="card-image-wrapper">
           <span class="card-badge">Tappa 2</span>
@@ -658,14 +692,13 @@
             <li>Posizione privilegiata nel centro storico</li>
           </ul>
           <div class="btn-group">
-            <a href="https://palazzobellezia.it/camere/#junior-suite" target="_blank" class="btn btn-gold">Guarda la Suite 👑</a>
-            <a href="https://palazzobellezia.it/spa/" target="_blank" class="btn btn-teal">Esplora la SPA 🧖‍♀️</a>
+            <a href="https://palazzobellezia.it/camere/#junior-suite" target="_blank" class="btn btn-gold" rel="noopener">Guarda la Suite 👑</a>
+            <a href="https://palazzobellezia.it/spa/" target="_blank" class="btn btn-teal" rel="noopener">Esplora la SPA 🧖‍♀️</a>
           </div>
           <button class="continue-btn" onclick="continueJourney(3)">Prosegui →</button>
         </div>
       </div>
 
-      <!-- Card 3 -->
       <div id="card3" class="card">
         <div class="card-image-wrapper">
           <span class="card-badge">Tappa Finale</span>
@@ -679,7 +712,7 @@
             <li>Tasting experience dei cioccolatini iconici</li>
             <li>Workshop di decorazione tavolette</li>
           </ul>
-          <a href="https://www.peyrano.com/" target="_blank" class="btn btn-dark">Scopri l'Esperienza 🎩</a>
+          <a href="https://www.peyrano.com/" target="_blank" class="btn btn-dark" rel="noopener">Scopri l'Esperienza 🎩</a>
 
           <div class="celebration-box">
             <strong>🎂 Buon Compleanno! 🎂</strong>
@@ -703,7 +736,6 @@
       catch (e) { el.scrollIntoView(true); }
     }
 
-    // Flow iniziale
     const mapWrapper = document.getElementById('mapWrapper');
     const journeyPanel = document.getElementById('journeyPanel');
 
@@ -724,7 +756,6 @@
       }, reduceMotion ? 50 : 450);
     }
 
-    // Card switching
     function hideCard(cardEl) {
       if (!cardEl) return Promise.resolve();
       if (!cardEl.classList.contains('show')) return Promise.resolve();
@@ -766,7 +797,6 @@
       }
     }
 
-    // Particelle
     function createParticles(element) {
       const rect = element.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -801,7 +831,6 @@
       }
     }
 
-    // Confetti
     function createConfetti() {
       const colors = ['#d4af37', '#f4e4c1', '#8b4513', '#e74c3c', '#4ade80', '#fff'];
       for (let i = 0; i < 100; i++) {
@@ -827,7 +856,6 @@
       }
     }
 
-    // Tram su percorso SVG
     const route = document.getElementById('tramRoute');
     const tram = document.getElementById('tram');
 
@@ -937,7 +965,6 @@
       setTimeout(() => moveToStop(nextStop), 450);
     }
 
-    // Fireworks overlay (canvas)
     const overlay = document.getElementById('fireworks-overlay');
     const canvas = document.getElementById('fireworks-canvas');
     const ctx = canvas.getContext('2d');
@@ -1015,7 +1042,6 @@
     }
 
     function hideOverlay() {
-      // NUOVO: attiva lo sfondo cioccolatini quando l'overlay sparisce
       document.body.classList.add('choco-bg-on');
 
       overlay.style.opacity = '0';
@@ -1034,7 +1060,6 @@
       }, 1400);
     }
 
-    // Boot
     window.addEventListener('load', () => {
       initRoute();
 
