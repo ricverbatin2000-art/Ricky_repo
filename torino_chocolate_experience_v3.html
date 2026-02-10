@@ -17,26 +17,23 @@
       color: white;
       background: linear-gradient(180deg, #0d0806 0%, #1a0f0a 30%, #2d1b12 100%);
       overflow-x: hidden;
-      position: relative; /* per layer ::before */
+      position: relative;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ------------------ SFONDO CIOCCOLATINI ------------------ */
     body::before{
       content: "";
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-
       background-image:
         linear-gradient(180deg, rgba(13,8,6,0.45) 0%, rgba(26,15,10,0.25) 35%, rgba(45,27,18,0.45) 100%),
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cdefs%3E%3CradialGradient id='g' cx='50%25' cy='50%25' r='65%25'%3E%3Cstop offset='0%25' stop-color='%23f4e4c1' stop-opacity='.18'/%3E%3Cstop offset='100%25' stop-color='%23d4af37' stop-opacity='.05'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='220' height='220' fill='none'/%3E%3Cg opacity='.9'%3E%3Cg transform='translate(28 34) rotate(-10)'%3E%3Crect x='0' y='0' width='64' height='48' rx='10' fill='rgba(0,0,0,0)' stroke='%23d4af37' stroke-opacity='.22' stroke-width='2'/%3E%3Cpath d='M16 0v48M32 0v48M48 0v48' stroke='%23d4af37' stroke-opacity='.12' stroke-width='2'/%3E%3Cpath d='M0 16h64M0 32h64' stroke='%23d4af37' stroke-opacity='.10' stroke-width='2'/%3E%3C/g%3E%3Cg transform='translate(132 128) rotate(12)'%3E%3Crect x='0' y='0' width='70' height='52' rx='12' fill='rgba(0,0,0,0)' stroke='%23f4e4c1' stroke-opacity='.16' stroke-width='2'/%3E%3Cpath d='M18 0v52M35 0v52M52 0v52' stroke='%23f4e4c1' stroke-opacity='.09' stroke-width='2'/%3E%3Cpath d='M0 18h70M0 34h70' stroke='%23f4e4c1' stroke-opacity='.08' stroke-width='2'/%3E%3C/g%3E%3Ccircle cx='158' cy='52' r='34' fill='url(%23g)'/%3E%3Ccircle cx='52' cy='164' r='30' fill='url(%23g)'/%3E%3C/g%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 260px 260px;
       background-position: 0 0;
-
       opacity: 0;
       transition: opacity 1.2s ease;
     }
@@ -49,9 +46,7 @@
       position: relative;
       z-index: 1;
     }
-    /* ------------------ /SFONDO CIOCCOLATINI ------------------ */
 
-    /* Overlay iniziale */
     #fireworks-overlay {
       position: fixed;
       inset: 0;
@@ -84,6 +79,19 @@
       animation: popIn 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       letter-spacing: 4px;
       padding: 0 16px;
+    }
+
+    .birthday-date {
+      position: relative;
+      z-index: 10000;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(16px, 3vw, 24px);
+      color: #d4af37;
+      margin-top: 15px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      animation: fadeInUp 1s ease-out 0.5s both;
     }
 
     .birthday-heart{
@@ -158,6 +166,76 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       padding: 0 10px;
+    }
+
+    /* Countdown styles */
+    .countdown-container {
+      margin-top: 30px;
+      padding: 25px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .countdown-container.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .countdown-title {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: #d4af37;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-item {
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .countdown-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 48px);
+      font-weight: 700;
+      color: #f4e4c1;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+      line-height: 1;
+      display: block;
+    }
+
+    .countdown-label {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: #d4af37;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 8px;
+      display: block;
+    }
+
+    .countdown-separator {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #d4af37;
+      align-self: flex-start;
+      margin-top: 5px;
     }
 
     .start-btn {
@@ -466,7 +544,6 @@
 
     .particle { position: fixed; pointer-events: none; z-index: 9998; }
 
-    /* Responsive (tablet/phone) */
     @media (max-width: 768px) {
       .map-section { height: 320px; }
       .card-content { padding: 25px; }
@@ -474,33 +551,32 @@
       .btn-group { flex-direction: column; }
       .btn { width: 100%; }
       .stop-text { font-size: 12px; }
+      .countdown { gap: 10px; }
+      .countdown-item { min-width: 60px; }
+      .countdown-separator { display: none; }
     }
 
-    /* EXTRA: telefoni piccoli */
     @media (max-width: 480px) {
       .container { padding: 22px 14px 70px; }
-
       .birthday-text { letter-spacing: 2px; }
       .birthday-subtitle { letter-spacing: 3px; margin-top: 18px; }
-
+      .birthday-date { font-size: 14px; letter-spacing: 2px; }
       .main-title { font-size: 26px; letter-spacing: 2px; }
       .subtitle-date { font-size: 12px; letter-spacing: 2px; }
-
       .start-btn{
         width: 100%;
         max-width: 340px;
         padding: 16px 20px;
         font-size: 16px;
       }
-
       .map-section { height: 280px; border-radius: 22px; }
       .stop-text { font-size: 11px; letter-spacing: 1px; }
-
       .card { margin: 18px 10px; border-radius: 20px; }
       .card-image-wrapper { height: 200px; }
       .card-content { padding: 22px; }
-
-      body.choco-bg-on::before { opacity: 0.12; } /* un po’ più leggero su mobile */
+      body.choco-bg-on::before { opacity: 0.12; }
+      .countdown-number { font-size: 28px; }
+      .countdown-label { font-size: 10px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -510,10 +586,10 @@
 </head>
 
 <body>
-  <!-- Overlay iniziale -->
   <div id="fireworks-overlay">
     <canvas id="fireworks-canvas"></canvas>
     <div class="birthday-text">Buon Compleanno <span class="birthday-heart" aria-hidden="true">❤</span></div>
+    <div class="birthday-date">16 Febbraio 2026</div>
     <div class="birthday-subtitle">Un viaggio ti attende...</div>
   </div>
 
@@ -521,12 +597,38 @@
     <header class="hero" id="hero">
       <h1 class="main-title">🍫 Chocolate Experience 🍫</h1>
       <div class="subtitle-date">28 Febbraio — 1 Marzo 2026</div>
+      
+      <div class="countdown-container" id="countdownContainer">
+        <div class="countdown-title">Mancano solo:</div>
+        <div class="countdown" id="countdown">
+          <div class="countdown-item">
+            <span class="countdown-number" id="days">00</span>
+            <span class="countdown-label">Giorni</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <span class="countdown-number" id="hours">00</span>
+            <span class="countdown-label">Ore</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <span class="countdown-number" id="minutes">00</span>
+            <span class="countdown-label">Minuti</span>
+          </div>
+          <span class="countdown-separator">:</span>
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">00</span>
+            <span class="countdown-label">Secondi</span>
+          </div>
+        </div>
+      </div>
+      
       <button class="start-btn" id="startBtn" onclick="startJourney()">🚃 Inizia il Viaggio</button>
     </header>
 
     <section class="journey-panel" id="journeyPanel" aria-live="polite">
       <h3>Un viaggio ti attende…</h3>
-      <p>Tra poco comparirà la mappa: il tram farà tappa in tre punti speciali. Quando arriva a un pallino, si sblocca l’esperienza corrispondente.</p>
+      <p>Tra poco comparirà la mappa: il tram farà tappa in tre punti speciali. Quando arriva a un pallino, si sblocca l'esperienza corrispondente.</p>
     </section>
 
     <div class="map-wrapper" id="mapWrapper">
@@ -619,7 +721,6 @@
                 stroke-linecap="round"
                 filter="url(#softGlow)"/>
 
-          <!-- Fermate -->
           <g class="stop" id="stop1">
             <circle class="stop-dot" r="18"></circle>
             <use class="stop-ico"
@@ -644,7 +745,6 @@
             <text class="stop-text" y="-32">Peyrano</text>
           </g>
 
-          <!-- Tram -->
           <g id="tram" class="tram-icon">
             <rect x="-34" y="-16" width="68" height="32" rx="6" fill="#d4af37" stroke="rgba(26,15,10,0.7)" stroke-width="2"/>
             <rect x="-26" y="-9" width="18" height="12" rx="2" fill="#87ceeb" opacity="0.95"/>
@@ -679,6 +779,7 @@
             <li>Visita al Museo del Cioccolato e del Gianduja</li>
           </ul>
           <a href="https://www.choco-story-torino.it/choco-tram-2026" target="_blank" class="btn btn-primary" rel="noopener">Scopri il Choco Tram ✨</a>
+          <a href="https://www.google.com/maps/place/Choco-Story+Torino,+Museo+del+Cioccolato+e+del+Gianduja/@45.0614089,7.6626295,14z/data=!4m6!3m5!1s0x47886d9121c641a1:0x4ea42522169ba3f1!8m2!3d45.058207!4d7.6739377!16s%2Fg%2F11v_5tvsdp?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-green" rel="noopener">Maps 🗺️  </a>
           <button class="continue-btn" onclick="continueJourney(2)">Continua il Viaggio →</button>
         </div>
       </div>
@@ -700,6 +801,7 @@
           <div class="btn-group">
             <a href="https://palazzobellezia.it/camere/#junior-suite" target="_blank" class="btn btn-green" rel="noopener">Guarda la Suite 👑</a>
             <a href="https://palazzobellezia.it/spa/" target="_blank" class="btn btn-aqua" rel="noopener">Esplora la SPA 🧖‍♀️</a>
+            <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47886decb9e36261:0xe80e46db2e91aa03?sa=X&ved=1t:8290&ictx=111" target="_blank" class="btn btn-primary" rel="noopener">Maps 🗺️  </a>
           </div>
           <button class="continue-btn" onclick="continueJourney(3)">Prosegui →</button>
         </div>
@@ -719,10 +821,12 @@
             <li>Workshop di decorazione tavolette</li>
           </ul>
           <a href="https://www.peyrano.com/" target="_blank" class="btn btn-dark" rel="noopener">Scopri l'Esperienza 🎩</a>
+           <a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x47886d5f23cc3491:0xf9bb0f415bd58513?sa=X&ved=1t:8290&ictx=111" target="_blank" class="btn btn-primary" rel="noopener">Maps 🗺️  </a>
 
           <div class="celebration-box">
             <strong>🎂 Buon Compleanno! 🎂</strong>
             <span>Prepara la valigia, è tutto pronto!<br>Un weekend indimenticabile ci aspetta ❤️</span>
+            </span>Buon viaggio nel cioccolato! 🍫🚃❤️<span>
           </div>
         </div>
       </div>
@@ -744,6 +848,36 @@
 
     const mapWrapper = document.getElementById('mapWrapper');
     const journeyPanel = document.getElementById('journeyPanel');
+    const countdownContainer = document.getElementById('countdownContainer');
+
+    // Countdown functionality
+    function updateCountdown() {
+      const targetDate = new Date('2026-02-28T00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days.toString().padStart(2, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+
+    // Start countdown immediately and update every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 
     function startJourney() {
       if (isMoving) return;
@@ -753,6 +887,7 @@
       startBtn.textContent = '🚃 Viaggio in corso...';
 
       journeyPanel.classList.add('show');
+      countdownContainer.classList.add('show');
       smartScrollIntoView(document.getElementById('hero'), { block: 'start' });
 
       setTimeout(() => {
@@ -940,7 +1075,7 @@
       const stopEl = document.getElementById(stops[stopNum].id);
       const targetLen = stopLen[stopNum];
 
-      await animateTramToLength(targetLen, 15000);
+      await animateTramToLength(targetLen, 22000);
 
       stopEl.classList.add('active');
       if (!reduceMotion) createParticles(stopEl);
